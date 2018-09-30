@@ -24,6 +24,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
-	
+public:
+	TArray<AActor*> GetPatrolPoints() const;
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Patrol Points")
+	TArray<AActor*> PatrolPoints;
 };

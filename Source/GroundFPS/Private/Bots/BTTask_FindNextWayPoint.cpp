@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BTTask_FindNextWayPoint.h"
-#include "PatrollingGuard.h"
+#include "PatrolRoute.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
@@ -17,10 +17,16 @@ EBTNodeResult::Type UBTTask_FindNextWayPoint::ExecuteTask(UBehaviorTreeComponent
 	// Set next way point and update index with one plus.
 	AAIController* AC = OwnerComp.GetAIOwner();
 	APawn* Pawn = AC->GetPawn();
+
 	if (Pawn)
 	{
-		APatrollingGuard* PG = Cast<APatrollingGuard>(Pawn);
-		auto PatrolPoints = PG->PatrolPointsCPP;
+		UPatrolRoute* PatrolRouteComp = Pawn->FindComponentByClass<UPatrolRoute>();
+		if (!ensure(PatrolRouteComp))
+		{
+			return EBTNodeResult::Failed;
+		}
+
+		auto PatrolPoints = PatrolRouteComp->GetPatrolPoints();
 
 		BlackboardComp->SetValueAsObject(WayPointKey.SelectedKeyName, PatrolPoints[Index]);
 
