@@ -18,7 +18,7 @@ UPatrolRoute::UPatrolRoute()
 void UPatrolRoute::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	// ...
 	
 }
